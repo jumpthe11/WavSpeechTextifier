@@ -3,3 +3,4 @@ torch
 torchaudio
 tqdm==4.69.0
 faster-whisper
+streamlit

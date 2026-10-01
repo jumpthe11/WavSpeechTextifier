@@ -2,7 +2,15 @@ import os
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional
+import av
 
+# Monkeypatch av.open to remove metadata_errors keyword argument 
+# which was removed in newer versions of PyAV (causing faster-whisper to crash).
+_original_av_open = av.open
+def _patched_av_open(*args, **kwargs):
+    kwargs.pop('metadata_errors', None)
+    return _original_av_open(*args, **kwargs)
+av.open = _patched_av_open
 
 class BaseTranscriber(ABC):
     """

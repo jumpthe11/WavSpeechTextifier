@@ -35,13 +35,20 @@ WavSpeechTextifier is a Python utility that scans a directory for `.wav` audio f
 
 ## Usage
 
-Run the tool using the provided `run.bat` (which automatically uses the virtual environment), or run the python script directly if your environment is activated.
+### 🎨 Web Interface (Recommended)
+We have added a beautiful, modern web interface using Streamlit!
+1. Double-click **`run_ui.bat`**
+2. A browser window will open automatically.
+3. Select your folder, choose your model, and click start!
+
+### 💻 Command Line Interface
+If your virtual environment is activated, you can run the python script directly from the terminal.
 
 ```bash
-# Using the batch file (Windows):
-run.bat /path/to/wav/files
+# Activate environment (Windows)
+venv\Scripts\activate
 
-# Or manually:
+# Run manually:
 python voiceline_renamer.py /path/to/wav/files
 ```
 
@@ -50,7 +57,7 @@ python voiceline_renamer.py /path/to/wav/files
 You can provide settings directly from the command line:
 
 ```bash
-run.bat /path/to/wav/files --model small.en --device cpu
+python voiceline_renamer.py /path/to/wav/files --model small.en --device cpu
 ```
 
 - `--provider`: Speech-to-text provider (default: `faster-whisper`).

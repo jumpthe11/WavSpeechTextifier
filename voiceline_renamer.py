@@ -55,7 +55,8 @@ def process_audio_files(
     language: str = "en",
     device: str = "cpu",
     max_length: int = 80,
-    models_dir: str = None
+    models_dir: str = None,
+    progress_callback = None
 ) -> None:
     """
     Scans the directory for .wav files and renames them based on their content using the chosen model/provider.
@@ -95,7 +96,7 @@ def process_audio_files(
 
     success_count = 0
 
-    for file_path in tqdm(wav_files, desc="Renaming Files", unit="file"):
+    for i, file_path in enumerate(tqdm(wav_files, desc="Renaming Files", unit="file")):
         try:
             transcription = transcriber.transcribe(file_path)
 
@@ -110,9 +111,14 @@ def process_audio_files(
 
             file_path.rename(target_path)
             success_count += 1
+            
+            if progress_callback:
+                progress_callback(i + 1, len(wav_files), file_path.name, target_path.name, "success")
 
         except Exception as e:
             tqdm.write(f"Error processing {file_path.name}: {e}")
+            if progress_callback:
+                progress_callback(i + 1, len(wav_files), file_path.name, "", f"error: {e}")
 
     print(f"\nTask Completed! Successfully renamed {success_count}/{len(wav_files)} files.")
 
